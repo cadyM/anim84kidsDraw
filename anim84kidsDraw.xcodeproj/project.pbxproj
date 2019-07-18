@@ -14,6 +14,7 @@
 		18EC5D3D22E0D9AF001A9D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 18EC5D3C22E0D9AF001A9D3E /* Assets.xcassets */; };
 		18EC5D4022E0D9B0001A9D3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18EC5D3E22E0D9B0001A9D3E /* LaunchScreen.storyboard */; };
 		18EC5D4C22E0DE1D001A9D3E /* DrawingBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EC5D4B22E0DE1D001A9D3E /* DrawingBoard.swift */; };
+		18EC5D4F22E1099D001A9D3E /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EC5D4E22E1099D001A9D3E /* Line.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		18EC5D3F22E0D9B0001A9D3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		18EC5D4122E0D9B0001A9D3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		18EC5D4B22E0DE1D001A9D3E /* DrawingBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingBoard.swift; sourceTree = "<group>"; };
+		18EC5D4E22E1099D001A9D3E /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,12 +64,21 @@
 				18EC5D3422E0D9AD001A9D3E /* ViewController.swift */,
 				18EC5D3622E0D9AD001A9D3E /* Main.storyboard */,
 				18EC5D4B22E0DE1D001A9D3E /* DrawingBoard.swift */,
+				18EC5D4D22E1096D001A9D3E /* Models */,
 				18EC5D3C22E0D9AF001A9D3E /* Assets.xcassets */,
 				18EC5D3E22E0D9B0001A9D3E /* LaunchScreen.storyboard */,
 				18EC5D4122E0D9B0001A9D3E /* Info.plist */,
 				18EC5D3922E0D9AD001A9D3E /* anim84kidsDraw.xcdatamodeld */,
 			);
 			path = anim84kidsDraw;
+			sourceTree = "<group>";
+		};
+		18EC5D4D22E1096D001A9D3E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				18EC5D4E22E1099D001A9D3E /* Line.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +156,7 @@
 				18EC5D4C22E0DE1D001A9D3E /* DrawingBoard.swift in Sources */,
 				18EC5D3B22E0D9AD001A9D3E /* anim84kidsDraw.xcdatamodeld in Sources */,
 				18EC5D3322E0D9AD001A9D3E /* AppDelegate.swift in Sources */,
+				18EC5D4F22E1099D001A9D3E /* Line.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

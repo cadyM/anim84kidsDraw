@@ -11,6 +11,18 @@ import UIKit
 class Canvas: UIView{
     
     //public function
+    fileprivate var strokeColor = UIColor.black
+    
+    fileprivate var strokeWidth :  Float = 1
+    
+    func setStrokeWidth(width: Float){
+        self.strokeWidth = width
+    }
+    
+    func setStrokeColor(color: UIColor){
+        self.strokeColor = color
+    }
+    
     func undo() {
          _ = lines.popLast()
         setNeedsDisplay()
@@ -36,30 +48,34 @@ class Canvas: UIView{
 //        context.move(to: startPoint)
 //        context.addLine(to: endPoint)
         
-        context.setStrokeColor(UIColor.red.cgColor)
-        context.setLineWidth(10)
         context.setLineCap(.butt)
         
-        lines.forEach{(line) in for (i, p) in line.enumerated(){
-            if i == 0{
-                context.move(to: p)
-                
-            }else{
-                context.addLine(to: p)
+        lines.forEach { (line) in
+            context.setStrokeColor(line.color.cgColor)
+            context.setLineWidth(CGFloat(line.strokeWidth))
+            context.setLineCap(.round)
+            for (i, p) in line.points.enumerated(){
+                if i == 0{
+                    context.move(to: p)
+                    
+                }else{
+                    context.addLine(to: p)
+                }
             }
+            context.strokePath()
         }
-    }
+    
         
-        context.strokePath()
+        
         
     }
 //ditch this line
 //    var line = [CGPoint]()
     
-    var lines = [[CGPoint]]()
+    fileprivate var lines = [Line]()
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        lines.append([CGPoint]())
+        lines.append(Line.init(strokeWidth: strokeWidth, color: strokeColor, points: []))
     }
     
     //track finger
@@ -68,7 +84,7 @@ class Canvas: UIView{
 //        print(point)
         
         guard var lastLine = lines.popLast() else { return }
-        lastLine.append(point)
+        lastLine.points.append(point)
         lines.append(lastLine)
 //        let lastLine = lines.last
 //        lastLine?.append(point)
@@ -109,6 +125,49 @@ class DrawingBoard: UIViewController {
         canvas.clear()
     }
     
+    let yellowButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .yellow
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(handleColorChange), for: .touchUpInside)
+        return button
+    }()
+    
+    let redButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .red
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(handleColorChange), for: .touchUpInside)
+        return button
+    }()
+    
+    let blueButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = .blue
+        button.layer.borderWidth = 1
+        button.addTarget(self, action: #selector(handleColorChange), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleColorChange(button: UIButton) {
+        canvas.setStrokeColor(color: button.backgroundColor ?? .black)
+    }
+    
+    let slider: UISlider = {
+        let slider = UISlider()
+        slider.minimumValue = 1
+        slider.maximumValue = 10
+//        slider.minimumValue = 1
+//        slider.maximumValue = 10
+        slider.addTarget(self, action: #selector(handleSliderChange), for: .valueChanged)
+//        slider.addTarget(self, action: #selector(handleSliderChange), for: .valueChanged)
+        return slider
+//        return slider
+    }()
+    
+    @objc fileprivate func handleSliderChange() {
+        canvas.setStrokeWidth(width: slider.value)
+    }
     
     override func loadView(){
         self.view = canvas
@@ -125,19 +184,24 @@ class DrawingBoard: UIViewController {
     
         
     fileprivate func setupLayout() {
-        let stackView = UIStackView(arrangedSubviews: [undoButton, clearButton])
+        let colorsStackView = UIStackView(arrangedSubviews: [yellowButton, redButton, blueButton])
+        colorsStackView.distribution = .fillEqually
+        let stackView = UIStackView(arrangedSubviews: [undoButton, colorsStackView, clearButton, slider])
+        stackView.spacing = 8
         stackView.distribution = .fillEqually
         
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -8).isActive = true
 
         // Do any additional setup after loading the view.
     }
     
+
     
+
 
     /*
     // MARK: - Navigation
