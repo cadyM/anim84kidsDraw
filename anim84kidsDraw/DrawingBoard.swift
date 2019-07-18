@@ -10,6 +10,17 @@ import UIKit
 
 class Canvas: UIView{
     
+    //public function
+    func undo() {
+         _ = lines.popLast()
+        setNeedsDisplay()
+    }
+    
+    func clear(){
+        lines.removeAll()
+        setNeedsDisplay()
+    }
+    
     override func draw(_ rect: CGRect){
         super.draw(rect)
         
@@ -72,16 +83,60 @@ class Canvas: UIView{
 class DrawingBoard: UIViewController {
     
     let canvas = Canvas()
+    
+    let undoButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Undo", for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleUndo), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc fileprivate func handleUndo() {
+        print("Undo lines drawn")
+        canvas.undo()
+    }
+    
+    let clearButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Clear", for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 14)
+        button.addTarget(self, action: #selector(handleClear), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func handleClear(){
+        canvas.clear()
+    }
+    
+    
+    override func loadView(){
+        self.view = canvas
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(canvas)
+//        view.addSubview(canvas)
         canvas.backgroundColor = .white
-        canvas.frame = view.frame
+        setupLayout()
+//        canvas.frame = view.frame
+    }
+    
+        
+    fileprivate func setupLayout() {
+        let stackView = UIStackView(arrangedSubviews: [undoButton, clearButton])
+        stackView.distribution = .fillEqually
+        
+        view.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
 
         // Do any additional setup after loading the view.
     }
+    
     
 
     /*
