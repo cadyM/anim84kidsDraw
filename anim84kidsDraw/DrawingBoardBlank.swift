@@ -1,4 +1,12 @@
 //
+//  DrawingBoardBlank.swift
+//  anim84kidsDraw
+//
+//  Created by Apple on 7/18/19.
+//  Copyright © 2019 Apple. All rights reserved.
+//
+
+//
 //  DrawingBoard.swift
 //  anim84kidsDraw
 //
@@ -8,7 +16,7 @@
 
 import UIKit
 
-class Canvas: UIView {
+class Canvas3: UIView{
     
     //public function
     fileprivate var strokeColor = UIColor.black
@@ -24,7 +32,7 @@ class Canvas: UIView {
     }
     
     func undo() {
-         _ = lines.popLast()
+        _ = lines.popLast()
         setNeedsDisplay()
     }
     
@@ -37,16 +45,16 @@ class Canvas: UIView {
         super.draw(rect)
         
         guard let context = UIGraphicsGetCurrentContext() else
-            {return}
+        {return}
         
         //lines
         //dummy data
-//        let startPoint = CGPoint(x: 0, y: 0)
-//        let endPoint = CGPoint(x: 100, y: 100)
-//
-//
-//        context.move(to: startPoint)
-//        context.addLine(to: endPoint)
+        //        let startPoint = CGPoint(x: 0, y: 0)
+        //        let endPoint = CGPoint(x: 100, y: 100)
+        //
+        //
+        //        context.move(to: startPoint)
+        //        context.addLine(to: endPoint)
         
         context.setLineCap(.butt)
         
@@ -64,17 +72,13 @@ class Canvas: UIView {
             }
             context.strokePath()
         }
-    
+        
         
         
         
     }
-    
-    
-    
-    
-//ditch this line
-//    var line = [CGPoint]()
+    //ditch this line
+    //    var line = [CGPoint]()
     
     fileprivate var lines = [Line]()
     
@@ -85,22 +89,22 @@ class Canvas: UIView {
     //track finger
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let point = touches.first?.location(in: nil) else {return}
-//        print(point)
+        //        print(point)
         
         guard var lastLine = lines.popLast() else { return }
         lastLine.points.append(point)
         lines.append(lastLine)
-//        let lastLine = lines.last
-//        lastLine?.append(point)
+        //        let lastLine = lines.last
+        //        lastLine?.append(point)
         
-//        line.append(point)
+        //        line.append(point)
         
         setNeedsDisplay()
     }
     
 }
 
-class DrawingBoard: UIViewController {
+class DrawingBoardBlank: UIViewController {
     
     let canvas = Canvas()
     
@@ -128,11 +132,6 @@ class DrawingBoard: UIViewController {
     @objc func handleClear(){
         canvas.clear()
     }
-    
-    @IBAction func backButton(_ sender: Any) {
-    self.performSegue(withIdentifier: "back2", sender: self)
-    }
-    
     
     let yellowButton: UIButton = {
         let button = UIButton(type: .system)
@@ -166,12 +165,12 @@ class DrawingBoard: UIViewController {
         let slider = UISlider()
         slider.minimumValue = 1
         slider.maximumValue = 10
-//        slider.minimumValue = 1
-//        slider.maximumValue = 10
+        //        slider.minimumValue = 1
+        //        slider.maximumValue = 10
         slider.addTarget(self, action: #selector(handleSliderChange), for: .valueChanged)
-//        slider.addTarget(self, action: #selector(handleSliderChange), for: .valueChanged)
+        //        slider.addTarget(self, action: #selector(handleSliderChange), for: .valueChanged)
         return slider
-//        return slider
+        //        return slider
     }()
     
     @objc fileprivate func handleSliderChange() {
@@ -181,20 +180,19 @@ class DrawingBoard: UIViewController {
     override func loadView(){
         self.view = canvas
     }
-
+    
     
     @IBOutlet weak var userImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.addSubview(canvas)
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "human")!)
-//        canvas.backgroundColor = .white
+        //        view.addSubview(canvas)
+        canvas.backgroundColor = .white
         setupLayout()
-//        canvas.frame = view.frame
+        //        canvas.frame = view.frame
     }
     
-        
+    
     fileprivate func setupLayout() {
         let colorsStackView = UIStackView(arrangedSubviews: [yellowButton, redButton, blueButton])
         colorsStackView.distribution = .fillEqually
@@ -207,22 +205,22 @@ class DrawingBoard: UIViewController {
         stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant:  -8).isActive = true
-
+        
         // Do any additional setup after loading the view.
     }
     
-
     
-
-
+    
+    
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

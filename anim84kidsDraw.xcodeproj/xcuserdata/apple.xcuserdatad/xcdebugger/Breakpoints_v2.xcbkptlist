@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "anim84kidsDraw/DrawingBoard.swift"
-            timestampString = "585174268.133528"
+            timestampString = "585246828.278005"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "slider"
             landmarkType = "24">
          </BreakpointContent>
